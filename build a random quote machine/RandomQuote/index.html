@@ -1,13 +1,128 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+    <title>Random Quote!</title>
+    <style>
+      /* Ensure the quote box is horizontally and vertically centered */
+      .quote-box-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;  /* Ensures the container takes full height of viewport */
+      }
+
+      #quote-box {
+        width: 100%;
+        max-width: 500px;  /* Prevents the box from being too wide */
+        margin: 0 auto;  /* Centers the box horizontally */
+        text-align: center;
+      }
+
+      /* Style the quote text */
+      #text {
+        font-size: 1.5em;
+        font-weight: 500;
+        margin-bottom: 20px;
+      }
+
+      #author {
+        font-size: 1.2em;
+        font-style: italic;
+        margin-bottom: 20px;
+      }
+
+      /* Make buttons more compact */
+      .btn-custom {
+        width: 100%;
+        padding: 12px;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+      }
+
+      /* Optional: Add some styling for the card */
+      .card {
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Add responsive tweaks */
+      @media (max-width: 576px) {
+        #quote-box {
+          padding: 20px;
+        }
+
+        .btn-custom {
+          font-size: 1em;
+          padding: 10px;
+        }
+      }
+    </style>
+    <script>
+      const QUOTEBANK = [
+        {
+          quote: "To live is the rarest thing in the world. Most people exist, that is all.",
+          author: "Oscar Wilde"
+        },
+        {
+          quote: "That it will never come again is what makes life so sweet.",
+          author: "Emily Dickinson"
+        },
+        {
+          quote: "It is never too late to be what you might have been.",
+          author: "George Eliot"
+        }
+      ];
+
+      window.onload = init;
+      
+      function init () {
+        generateQuote();
+      }
+
+      function generateQuote() {
+        let quoteSize = QUOTEBANK.length;
+        let randomIndex = Math.floor(Math.random() * quoteSize);
+        let randomQuoteData = QUOTEBANK[randomIndex];
+
+        // Render the quote and author
+        document.getElementById("text").innerText = randomQuoteData.quote;
+        document.getElementById("author").innerText = randomQuoteData.author;
+
+        // Update the Twitter share link with the current quote
+        let twitterLink = `https://twitter.com/intent/tweet?text="${encodeURIComponent(randomQuoteData.quote)}" - ${encodeURIComponent(randomQuoteData.author)}`;
+        document.getElementById("tweet-quote").setAttribute("href", twitterLink);
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+
+    <div class="container-fluid">
+      <div class="row quote-box-container">
+        <div class="col-md-6">
+          <div id="quote-box">
+            <div class="card">
+              <div class="card-header text-center">
+                Random Quote Machine
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" id="text"></h5>
+                <p class="card-text" id="author"></p>
+                <button id="new-quote" onclick="generateQuote()" class="btn btn-success btn-custom">New Quote</button>
+                <a href="https://twitter.com/intent/tweet" id="tweet-quote" class="btn btn-primary btn-custom" target="_blank">Tweet Quote</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
   </body>
 </html>
